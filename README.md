@@ -1,4 +1,3 @@
-
 # 🚪 Gate Control
 
 > **ESP32-C3 Super Mini + CC1101 — compact Sub-GHz controller for your own compatible static OOK/ASK remotes.**
@@ -105,10 +104,16 @@ gate-control/
 ├── README.md
 ├── docs/
 │   └── WIRING.md
-└── …
+├── firmware/
+│   ├── gate-control-esp32c3-full.bin
+│   ├── gate-control-esp32c3-zeronode-boot.bin
+│   └── gate-control-esp32c3-protocols.bin
+└── gate_control_enhanced/
+    └── gate_control_enhanced.ino
 ```
 
-Firmware source and a compiled release image will be added in a later update.
+The repository includes compiled ESP32-C3 firmware images in the `firmware/`
+folder. The current development source is kept in `gate_control_enhanced/`.
 
 ## 🛠️ Firmware requirements
 
