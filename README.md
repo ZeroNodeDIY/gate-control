@@ -1,3 +1,4 @@
+
 # 🚪 Gate Control
 
 > **ESP32-C3 Super Mini + CC1101 — compact Sub-GHz controller for your own compatible static OOK/ASK remotes.**
@@ -20,6 +21,8 @@ The project is designed as a clear, small hardware build: three buttons, an on-d
 
 - 📥 **RAW OOK/ASK capture** through a GPIO interrupt, preserving pulse timing;
 - 📤 **RAW replay** of the saved timing sequence through the CC1101;
+- 🧩 additional decoding of compatible **CAME Static**, **Nice FLO Static**,
+  **Holtek** and **rc-switch** pulse formats, with bit length and key shown on OLED;
 - 💾 **20 independent slots** stored in ESP32 NVS, retained after power-off;
 - 🔁 capture of up to three repeated packets and selection of the closest matching one;
 - 🧹 filtering of very short noise pulses before saving;
@@ -79,11 +82,19 @@ Many simple fixed-code remotes transmit the same OOK/ASK pulse pattern several t
 
 For transmission, the saved pulse durations are replayed in their original order. This is intentionally RAW replay, rather than a claim that the device has identified every radio protocol.
 
+After a frame is captured, a separate analyzer tries to recognize several
+well-defined static formats. Decoding is informational: storage and transmission
+continue to use the original RAW timing. If a frame does not pass the strict
+checks, the display reports it as RAW instead of guessing a brand.
+
 ### Compatibility limits
 
 Successful recording is not automatically proof that a remote can be duplicated:
 
 - **Static OOK/ASK remotes:** may be compatible when the frequency, modulation and timing match.
+- **CAME / Nice:** protocol names in the analyzer refer only to the supported
+  fixed-code CAME Static and Nice FLO Static formats, not every remote sold by
+  those manufacturers.
 - **Rolling-code / encrypted remotes:** capturing a transmission does not provide a valid future authorization code; replay is normally rejected by the receiver.
 - **Other modulation types (for example FSK):** are outside the current RAW OOK/ASK capture path.
 
